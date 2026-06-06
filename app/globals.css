@@ -1,0 +1,197 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #F0EEFF;
+  --bg2: #E8F4F2;
+  --primary: #4F46E5;
+  --primary-dark: #3730A3;
+  --primary-light: #EEF2FF;
+  --primary-glow: rgba(79,70,229,0.12);
+  --accent: #0F766E;
+  --accent-light: #F0FDFA;
+  --accent-glow: rgba(15,118,110,0.12);
+  --warning: #D97706;
+  --warning-light: #FFFBEB;
+  --success: #059669;
+  --success-light: #ECFDF5;
+  --danger: #DC2626;
+  --card: #FFFFFF;
+  --card-border: rgba(79,70,229,0.08);
+  --text: #1E1B4B;
+  --text-muted: #6B7280;
+  --text-soft: #9CA3AF;
+  --gradient-hero: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #0F766E 100%);
+  --gradient-card: linear-gradient(145deg, #ffffff 0%, #F5F3FF 100%);
+  --gradient-warm: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  --gradient-cool: linear-gradient(135deg, #EEF2FF 0%, #F0FDFA 100%);
+  --shadow-sm: 0 1px 3px 0 rgba(79,70,229,0.06), 0 1px 2px -1px rgba(79,70,229,0.04);
+  --shadow-md: 0 4px 16px -2px rgba(79,70,229,0.10), 0 2px 8px -2px rgba(0,0,0,0.04);
+  --shadow-lg: 0 8px 32px -4px rgba(79,70,229,0.14), 0 4px 16px -4px rgba(0,0,0,0.06);
+  --shadow-glow: 0 0 0 1px var(--card-border), 0 4px 24px -4px var(--primary-glow);
+}
+
+/* ── Base ── */
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-plus-jakarta), var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-heading {
+  font-family: var(--font-fraunces), var(--font-plus-jakarta), serif;
+}
+
+.font-display {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-optical-sizing: auto;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--card);
+  border-radius: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--card-border);
+  padding: 1.5rem;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card-glass {
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 1.25rem;
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+}
+
+.card-gradient {
+  background: var(--gradient-card);
+  border-radius: 1.25rem;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-glow);
+  padding: 1.5rem;
+}
+
+/* ── Section labels ── */
+.section-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  border-radius: 0.875rem;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px -2px var(--primary-glow);
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px -4px rgba(79,70,229,0.4);
+}
+
+.btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── Gradient pill tags ── */
+.tag-primary {
+  background: var(--primary-light);
+  color: var(--primary);
+  border-radius: 9999px;
+  padding: 0.2rem 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.tag-accent {
+  background: var(--accent-light);
+  color: var(--accent);
+  border-radius: 9999px;
+  padding: 0.2rem 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/* ── Animations ── */
+.fade-in {
+  animation: fadeInUp 0.35s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+.fade-in-slow {
+  animation: fadeInUp 0.6s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in {
+  animation: slideIn 0.4s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(79,70,229,0); }
+  50%       { box-shadow: 0 0 0 6px rgba(79,70,229,0.08); }
+}
+
+/* ── Inputs ── */
+.input {
+  width: 100%;
+  border-radius: 0.875rem;
+  border: 1.5px solid #E5E7EB;
+  background: #FAFAFA;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  color: var(--text);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: white;
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+/* ── Dot decorations ── */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(79,70,229,0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #C7D2FE; border-radius: 4px; }
+
+/* ── Selection ── */
+::selection { background: #C7D2FE; color: var(--text); }
