@@ -87,6 +87,7 @@ export default function MoodChart({ refreshKey }: { refreshKey?: number }) {
     <div className="card fade-in">
       <h2 className="mb-1 font-heading text-xl font-bold text-[var(--text)]">Mood Trend</h2>
       <p className="mb-4 text-sm text-[var(--text-muted)]">Last 7 days</p>
+      <div role="img" aria-label="Line chart showing mood scores for the last 7 days">
       <ResponsiveContainer width="100%" height={220}>
         <LineChart data={data} margin={{ top: 24, right: 16, left: -16, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" />
@@ -103,6 +104,7 @@ export default function MoodChart({ refreshKey }: { refreshKey?: number }) {
           />
         </LineChart>
       </ResponsiveContainer>
+      </div>
     </div>
   );
 }

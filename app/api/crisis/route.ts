@@ -3,11 +3,17 @@ import { CrisisInputSchema } from "@/lib/schema";
 import { getStructuredCompletion } from "@/lib/groq";
 import { buildCrisisDetectionPrompt } from "@/lib/prompts";
 import { CRISIS_RESOURCES } from "@/types/wellness";
+import { rateLimit } from "@/lib/rate-limit";
 
-export async function POST(req: NextRequest) {
+export async function POST(request: NextRequest) {
+  const ip = request.headers.get("x-forwarded-for") ?? request.headers.get("x-real-ip") ?? "unknown";
+  if (!rateLimit(ip)) {
+    return NextResponse.json({ success: false, error: "Too many requests. Please wait." }, { status: 429 });
+  }
+
   let body: unknown;
   try {
-    body = await req.json();
+    body = await request.json();
   } catch {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }

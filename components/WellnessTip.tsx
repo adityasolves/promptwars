@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 const TIPS = [
   "Take a 5-minute walk between study sessions to reset your focus.",
   "Write down 3 things you studied today that you understood well.",
@@ -35,7 +37,7 @@ const TIPS = [
 
 const TIP_ICONS = ["💧","🚶","📝","🍎","⏱️","🧘","👁️","🌙","🫁","📖","💪","🛌","🏠","📵","🎯","🪞","📓","🔀","📋","☀️","🗣️","🍵","💤","🎉","💬","📅","✍️","🙏","⭐","❤️"];
 
-export default function WellnessTip() {
+function WellnessTip() {
   const today = new Date();
   const dayOfYear = Math.floor(
     (today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 86400000
@@ -82,3 +84,5 @@ export default function WellnessTip() {
     </div>
   );
 }
+
+export default React.memo(WellnessTip);

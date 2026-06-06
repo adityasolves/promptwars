@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { MOOD_EMOJIS, EXAM_TYPES } from "@/types/wellness";
+import React, { useState } from "react";
+import { MOOD_EMOJIS, EXAM_TYPES, MAX_MOOD_NOTE_LENGTH } from "@/types/wellness";
 import { saveMoodEntry } from "@/lib/storage";
 import { getMoodColor } from "@/lib/utils";
 
-export default function MoodTracker({ onSaved }: { onSaved?: () => void }) {
+function MoodTracker({ onSaved }: { onSaved?: () => void }) {
   const [selected, setSelected] = useState<number | null>(null);
   const [note, setNote] = useState("");
   const [examType, setExamType] = useState("NEET");
@@ -49,7 +49,7 @@ export default function MoodTracker({ onSaved }: { onSaved?: () => void }) {
           <button
             key={score}
             onClick={() => setSelected(score)}
-            aria-label={`Mood ${score}: ${label}`}
+            aria-label={`Select mood: ${label}, score ${score} out of 10`}
             aria-pressed={selected === score}
             className="group flex flex-col items-center rounded-xl border-2 p-2 transition-all duration-200"
             style={
@@ -96,11 +96,11 @@ export default function MoodTracker({ onSaved }: { onSaved?: () => void }) {
       <div className="mb-4">
         <label className="mb-1 flex items-center justify-between text-xs font-semibold text-[var(--text-muted)]">
           <span>Add a note <span className="font-normal text-[var(--text-soft)]">(optional)</span></span>
-          <span className="font-normal text-[var(--text-soft)]">{note.length}/300</span>
+          <span className="font-normal text-[var(--text-soft)]">{note.length}/{MAX_MOOD_NOTE_LENGTH}</span>
         </label>
         <textarea
           value={note}
-          onChange={(e) => setNote(e.target.value.slice(0, 300))}
+          onChange={(e) => setNote(e.target.value.slice(0, MAX_MOOD_NOTE_LENGTH))}
           placeholder="What's on your mind today?"
           rows={2}
           className="input resize-none"
@@ -117,3 +117,5 @@ export default function MoodTracker({ onSaved }: { onSaved?: () => void }) {
     </div>
   );
 }
+
+export default React.memo(MoodTracker);

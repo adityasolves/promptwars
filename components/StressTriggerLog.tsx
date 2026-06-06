@@ -54,6 +54,7 @@ export default function StressTriggerLog() {
           <button
             key={tag}
             onClick={() => toggleTag(tag)}
+            aria-pressed={selected.includes(tag)}
             className="rounded-full px-3 py-1.5 text-sm font-semibold transition-all duration-150"
             style={
               selected.includes(tag)

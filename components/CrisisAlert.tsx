@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { CRISIS_RESOURCES } from "@/types/wellness";
 
 interface CrisisAlertProps {
   onDismiss?: () => void;
 }
 
-export default function CrisisAlert({ onDismiss }: CrisisAlertProps) {
+function CrisisAlert({ onDismiss }: CrisisAlertProps) {
   const [dismissed, setDismissed] = useState(false);
 
   if (dismissed) return null;
@@ -56,3 +56,5 @@ export default function CrisisAlert({ onDismiss }: CrisisAlertProps) {
     </div>
   );
 }
+
+export default React.memo(CrisisAlert);

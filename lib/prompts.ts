@@ -1,3 +1,10 @@
+/**
+ * Builds the system prompt for the reflection chat AI
+ * @param examType - The exam the student is preparing for (e.g. "NEET")
+ * @param recentMood - The student's most recent mood score (1-10)
+ * @param stressTags - Array of current stress trigger tags
+ * @returns System prompt string for the chat completion API
+ */
 export function buildReflectSystemPrompt(
   examType: string,
   recentMood: number,
@@ -21,6 +28,13 @@ Guidelines:
 - End each response with one small actionable suggestion`;
 }
 
+/**
+ * Builds the prompt for generating weekly wellness insights
+ * @param moodHistory - Array of recent mood entries with date, score, and examType
+ * @param triggerHistory - Array of recent trigger entries with date and tags
+ * @param examType - The exam the student is preparing for
+ * @returns Prompt string for the structured JSON completion API
+ */
 export function buildInsightsPrompt(
   moodHistory: { date: string; score: number; examType: string }[],
   triggerHistory: { date: string; tags: string[] }[],
@@ -40,6 +54,11 @@ Respond ONLY with a valid JSON object in this exact format:
 }`;
 }
 
+/**
+ * Builds the prompt for detecting crisis signals in a user message
+ * @param message - The user message to analyze
+ * @returns Prompt string for the structured JSON completion API
+ */
 export function buildCrisisDetectionPrompt(message: string): string {
   return `Analyze this message for crisis signals. Look for: suicidal ideation, self-harm mentions, extreme hopelessness, giving up on life, or statements about not wanting to exist.
 

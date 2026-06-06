@@ -105,6 +105,7 @@ export default function BreathingExercise() {
         )}
         {/* Inner circle */}
         <div
+          aria-label={active ? `Breathing guide animation, currently in ${current.phase} phase` : "Breathing guide animation, not started"}
           className="relative z-10 flex h-28 w-28 flex-col items-center justify-center rounded-full shadow-lg transition-all duration-1000"
           style={{
             background: active

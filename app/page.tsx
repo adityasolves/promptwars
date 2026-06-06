@@ -1,20 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import ExamCountdown from "@/components/ExamCountdown";
 import MoodTracker from "@/components/MoodTracker";
 import WellnessTip from "@/components/WellnessTip";
 import StressTriggerLog from "@/components/StressTriggerLog";
-import BreathingExercise from "@/components/BreathingExercise";
-import ReflectionChat from "@/components/ReflectionChat";
 import MotivationBanner from "@/components/MotivationBanner";
 import DailyAffirmation from "@/components/DailyAffirmation";
 import StudyTechniqueCard from "@/components/StudyTechniqueCard";
-import { clearAllData } from "@/lib/storage";
+import OnboardingModal from "@/components/OnboardingModal";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import { clearAllData, getMoodStreak } from "@/lib/storage";
 
-const MoodChart   = dynamic(() => import("@/components/MoodChart"),    { ssr: false });
+const MoodChartDynamic = dynamic(
+  () => import("@/components/MoodChart"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-48 animate-pulse bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-300 text-sm">
+        Loading chart…
+      </div>
+    )
+  }
+);
 const WellnessStats = dynamic(() => import("@/components/WellnessStats"), { ssr: false });
+const ReflectionChatDynamic = dynamic(
+  () => import("@/components/ReflectionChat"),
+  { ssr: false }
+);
+const BreathingExerciseDynamic = dynamic(
+  () => import("@/components/BreathingExercise"),
+  { ssr: false }
+);
+const WeeklyReport = dynamic(() => import("@/components/WeeklyReport"), { ssr: false });
 
 const NAV_TABS = [
   { id: "dashboard", label: "Home",    icon: "🏠" },
@@ -27,6 +46,11 @@ export default function Home() {
   const [moodKey, setMoodKey] = useState(0);
   const [activeTab, setActiveTab] = useState("dashboard");
   const [showClear, setShowClear] = useState(false);
+  const [streak, setStreak] = useState(0);
+
+  useEffect(() => {
+    setStreak(getMoodStreak());
+  }, [moodKey]);
 
   function handleClearData() {
     clearAllData();
@@ -36,6 +60,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen pb-24 md:pb-12" style={{ background: "linear-gradient(160deg, #F0EEFF 0%, #E8F4F2 60%, #FFF7ED 100%)" }}>
+      <OnboardingModal />
 
       {/* ── Top Nav ── */}
       <header className="sticky top-0 z-30 border-b border-white/60 bg-white/70 backdrop-blur-xl">
@@ -49,6 +74,13 @@ export default function Home() {
               <span className="ml-2 hidden text-xs text-[var(--text-muted)] sm:inline">Student Wellness Companion</span>
             </div>
           </div>
+
+          {/* Streak badge */}
+          {streak > 0 && (
+            <span className="hidden items-center gap-1 rounded-full bg-amber-50 px-3 py-1 text-sm font-semibold text-amber-600 sm:flex">
+              🔥 {streak} day streak
+            </span>
+          )}
 
           {/* Desktop nav pills */}
           <nav className="hidden items-center gap-1 md:flex">
@@ -97,40 +129,43 @@ export default function Home() {
         </div>
       )}
 
-      <main className="mx-auto max-w-5xl px-4 py-6">
+      <main id="main-content" className="mx-auto max-w-5xl px-4 py-6">
 
         {/* ── Dashboard tab ── */}
         {(activeTab === "dashboard") && (
           <div className="flex flex-col gap-5">
-            <MotivationBanner />
-            <WellnessStats />
+            <ErrorBoundary><MotivationBanner /></ErrorBoundary>
+            <ErrorBoundary><WellnessStats /></ErrorBoundary>
             <div className="grid gap-5 md:grid-cols-2">
-              <ExamCountdown />
-              <DailyAffirmation />
+              <ErrorBoundary><ExamCountdown /></ErrorBoundary>
+              <ErrorBoundary><DailyAffirmation /></ErrorBoundary>
             </div>
-            <MoodChart refreshKey={moodKey} />
-            <StudyTechniqueCard />
-            <WellnessTip />
+            <ErrorBoundary><MoodChartDynamic refreshKey={moodKey} /></ErrorBoundary>
+            <ErrorBoundary><WeeklyReport /></ErrorBoundary>
+            <ErrorBoundary><StudyTechniqueCard /></ErrorBoundary>
+            <ErrorBoundary><WellnessTip /></ErrorBoundary>
           </div>
         )}
 
         {/* ── Mood tab ── */}
         {activeTab === "mood" && (
           <div className="flex flex-col gap-5">
-            <MoodTracker onSaved={() => setMoodKey((k) => k + 1)} />
-            <StressTriggerLog />
-            <MoodChart refreshKey={moodKey} />
+            <ErrorBoundary><MoodTracker onSaved={() => setMoodKey((k) => k + 1)} /></ErrorBoundary>
+            <ErrorBoundary><StressTriggerLog /></ErrorBoundary>
+            <ErrorBoundary><MoodChartDynamic refreshKey={moodKey} /></ErrorBoundary>
           </div>
         )}
 
         {/* ── Chat tab ── */}
-        {activeTab === "chat" && <ReflectionChat />}
+        {activeTab === "chat" && (
+          <ErrorBoundary><ReflectionChatDynamic /></ErrorBoundary>
+        )}
 
         {/* ── Breathe tab ── */}
         {activeTab === "breathe" && (
           <div className="flex flex-col gap-5">
-            <BreathingExercise />
-            <StudyTechniqueCard />
+            <ErrorBoundary><BreathingExerciseDynamic /></ErrorBoundary>
+            <ErrorBoundary><StudyTechniqueCard /></ErrorBoundary>
           </div>
         )}
       </main>

@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { EXAM_TYPES } from "@/types/wellness";
 import { saveExamConfig, getExamConfig } from "@/lib/storage";
 import { getDaysUntilExam, getMotivationalMessage } from "@/lib/utils";
 
-export default function ExamCountdown() {
+function ExamCountdown() {
   const [exam, setExam] = useState("NEET");
   const [date, setDate] = useState("");
   const [editing, setEditing] = useState(false);
@@ -125,3 +125,5 @@ export default function ExamCountdown() {
     </div>
   );
 }
+
+export default React.memo(ExamCountdown);

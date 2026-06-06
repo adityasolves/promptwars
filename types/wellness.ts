@@ -65,3 +65,10 @@ export const MOOD_EMOJIS = [
   { score: 9, emoji: "😁", label: "Excellent" },
   { score: 10, emoji: "🤩", label: "Amazing" },
 ];
+
+export const MAX_MOOD_NOTE_LENGTH = 300
+export const MAX_MESSAGE_LENGTH = 500
+export const MAX_CONVERSATION_HISTORY = 10
+export const MAX_STORAGE_ENTRIES = 30
+export const INSIGHTS_CACHE_TTL_MS = 5 * 60 * 1000
+export const CHAT_DEBOUNCE_MS = 1500

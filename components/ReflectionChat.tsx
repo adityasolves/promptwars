@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { EXAM_TYPES, STRESS_TAGS } from "@/types/wellness";
+import { EXAM_TYPES, STRESS_TAGS, MAX_MESSAGE_LENGTH, MAX_CONVERSATION_HISTORY } from "@/types/wellness";
 import { getMoodHistory, getRecentMoodHistory } from "@/lib/storage";
 import CrisisAlert from "./CrisisAlert";
 
@@ -32,12 +32,12 @@ export default function ReflectionChat() {
 
   const sendMessage = useCallback(async () => {
     const now = Date.now();
-    if (!input.trim() || loading || now - lastSent < 1000) return;
+    if (!input.trim() || loading || now - lastSent < 1000) return; // 1000ms base debounce
     setLastSent(now);
 
-    const userMsg = input.trim().slice(0, 500);
+    const userMsg = input.trim().slice(0, MAX_MESSAGE_LENGTH);
     setInput("");
-    setMessages((prev) => [...prev.slice(-9), { role: "user", content: userMsg }]);
+    setMessages((prev) => [...prev.slice(-(MAX_CONVERSATION_HISTORY - 1)), { role: "user", content: userMsg }]);
     setLoading(true);
 
     try {
@@ -49,7 +49,7 @@ export default function ReflectionChat() {
           examType,
           recentMood: recentMood.current,
           stressTags: selectedTags,
-          conversationHistory: messages.slice(-10),
+          conversationHistory: messages.slice(-MAX_CONVERSATION_HISTORY),
         }),
       });
 
