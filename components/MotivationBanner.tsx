@@ -16,10 +16,10 @@ const QUOTES = [
 ];
 
 const STATS = [
-  { icon: "🎯", label: "Students supported", value: "50,000+" },
-  { icon: "📚", label: "Study sessions logged", value: "2M+" },
-  { icon: "😌", label: "Stress moments eased", value: "500K+" },
-  { icon: "🏆", label: "Exams conquered", value: "10,000+" },
+  { label: "Students supported", value: "50,000+" },
+  { label: "Study sessions logged", value: "2M+" },
+  { label: "Stress moments eased", value: "500K+" },
+  { label: "Exams conquered", value: "10,000+" },
 ];
 
 export default function MotivationBanner() {
@@ -44,67 +44,41 @@ export default function MotivationBanner() {
 
   return (
     <div className="relative overflow-hidden rounded-2xl" style={{ background: "var(--gradient-hero)" }}>
-      {/* Dot grid overlay */}
-      <div className="absolute inset-0 dot-grid opacity-30" />
+      <div className="absolute inset-0 dot-grid" />
+      <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-white/5" />
+      <div className="absolute -bottom-16 -left-16 h-56 w-56 rounded-full bg-white/5" />
 
-      {/* Decorative circles */}
-      <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/5" />
-      <div className="absolute -bottom-12 -left-12 h-48 w-48 rounded-full bg-white/5" />
-      <div className="absolute right-32 bottom-0 h-32 w-32 rounded-full bg-white/5" />
-
-      <div className="relative z-10 px-6 py-8 sm:px-10 sm:py-10">
-        {/* Header row */}
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 text-xl backdrop-blur-sm">
-              🧠
-            </div>
-            <div>
-              <p className="font-heading text-lg font-bold text-white sm:text-xl">MindEase</p>
-              <p className="text-xs text-white/60">Your Wellness Companion</p>
-            </div>
+      <div className="relative z-10 px-7 py-8 sm:px-10 sm:py-10">
+        {/* Header */}
+        <div className="mb-5 flex items-center justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest text-white/50">Daily Inspiration</p>
+            <p className="text-lg font-bold text-white">MindEase</p>
           </div>
-          <div className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
-            ✨ Daily Inspiration
-          </div>
+          <button
+            onClick={nextQuote}
+            className="rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold text-white/80 backdrop-blur-sm transition hover:bg-white/20"
+          >
+            Next quote
+          </button>
         </div>
 
         {/* Quote */}
-        <div
-          className="mb-6 transition-opacity duration-200"
-          style={{ opacity: visible ? 1 : 0 }}
-        >
-          <p className="font-display mb-2 text-xl font-semibold italic leading-snug text-white sm:text-2xl">
+        <div className="mb-7 transition-opacity duration-200" style={{ opacity: visible ? 1 : 0 }}>
+          <p className="mb-2 text-xl font-semibold italic leading-snug text-white sm:text-2xl">
             &ldquo;{q.text}&rdquo;
           </p>
-          <p className="text-sm text-white/60">— {q.author}</p>
+          <p className="text-sm text-white/55">— {q.author}</p>
         </div>
 
-        {/* Stats row */}
-        <div className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {/* Stats */}
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
           {STATS.map((s) => (
-            <div
-              key={s.label}
-              className="rounded-xl bg-white/10 px-3 py-2.5 backdrop-blur-sm"
-            >
-              <p className="text-lg">{s.icon}</p>
-              <p className="font-heading text-base font-bold text-white">{s.value}</p>
-              <p className="text-[10px] text-white/55">{s.label}</p>
+            <div key={s.label} className="rounded-xl bg-white/10 px-4 py-3 backdrop-blur-sm">
+              <p className="text-base font-bold text-white">{s.value}</p>
+              <p className="text-[11px] text-white/50">{s.label}</p>
             </div>
           ))}
-        </div>
-
-        {/* Footer */}
-        <div className="flex items-center justify-between">
-          <p className="text-xs text-white/50">
-            You are capable of more than you know.
-          </p>
-          <button
-            onClick={nextQuote}
-            className="flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold text-white backdrop-blur-sm transition hover:bg-white/20"
-          >
-            Next quote →
-          </button>
         </div>
       </div>
     </div>

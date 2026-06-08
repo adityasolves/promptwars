@@ -15,20 +15,20 @@ const AFFIRMATIONS = [
   "I am stronger than my doubts.",
   "My dedication sets me apart.",
   "I welcome challenges as opportunities to grow.",
-  "I am building the life I deserve, one study session at a time.",
+  "I am building the life I deserve, one session at a time.",
   "I believe in my ability to succeed.",
   "Rest is part of my strategy, not weakness.",
 ];
 
-const MOODS_OF_DAY = [
-  { time: "Morning", icon: "🌅", message: "Start fresh. Today is full of possibility." },
-  { time: "Afternoon", icon: "☀️", message: "Halfway through — you're doing great." },
-  { time: "Evening", icon: "🌙", message: "Wind down well. Rest fuels tomorrow's focus." },
+const TIME_GREETINGS = [
+  { label: "Good morning", message: "Start fresh — today is full of possibility." },
+  { label: "Good afternoon", message: "Halfway through — you're doing great." },
+  { label: "Good evening", message: "Wind down well. Rest fuels tomorrow's focus." },
 ];
 
 export default function DailyAffirmation() {
   const [affirmation, setAffirmation] = useState("");
-  const [timeGreeting, setTimeGreeting] = useState(MOODS_OF_DAY[0]);
+  const [greeting, setGreeting] = useState(TIME_GREETINGS[0]);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -36,9 +36,9 @@ export default function DailyAffirmation() {
     const seed = now.getFullYear() * 1000 + now.getMonth() * 31 + now.getDate();
     setAffirmation(AFFIRMATIONS[seed % AFFIRMATIONS.length]);
     const h = now.getHours();
-    if (h >= 5 && h < 12) setTimeGreeting(MOODS_OF_DAY[0]);
-    else if (h >= 12 && h < 18) setTimeGreeting(MOODS_OF_DAY[1]);
-    else setTimeGreeting(MOODS_OF_DAY[2]);
+    if (h >= 5 && h < 12) setGreeting(TIME_GREETINGS[0]);
+    else if (h >= 12 && h < 18) setGreeting(TIME_GREETINGS[1]);
+    else setGreeting(TIME_GREETINGS[2]);
   }, []);
 
   function handleCopy() {
@@ -51,34 +51,27 @@ export default function DailyAffirmation() {
     <div
       className="relative overflow-hidden rounded-2xl border px-5 py-5"
       style={{
-        background: "linear-gradient(135deg, #FFF7ED 0%, #FEF3C7 50%, #ECFDF5 100%)",
-        borderColor: "rgba(245,158,11,0.15)",
-        boxShadow: "0 2px 16px -4px rgba(245,158,11,0.12)",
+        background: "linear-gradient(135deg, #FFFBEB 0%, #FEF9C3 100%)",
+        borderColor: "rgba(217,119,6,0.12)",
       }}
     >
-      {/* Decorative */}
-      <div className="absolute right-0 top-0 text-6xl opacity-10 select-none">✨</div>
-
-      <div className="mb-3 flex items-center gap-2">
-        <span className="text-xl">{timeGreeting.icon}</span>
-        <div>
-          <p className="text-xs font-semibold text-amber-700">{timeGreeting.time} check-in</p>
-          <p className="text-[11px] text-amber-600">{timeGreeting.message}</p>
-        </div>
+      <div className="mb-3">
+        <p className="text-xs font-semibold uppercase tracking-widest text-amber-500">{greeting.label}</p>
+        <p className="text-xs text-amber-600">{greeting.message}</p>
       </div>
 
-      <div className="mb-4 rounded-xl bg-white/60 px-4 py-3 backdrop-blur-sm">
-        <p className="section-label mb-1.5 text-amber-600">Today&apos;s Affirmation</p>
-        <p className="font-display text-[15px] font-semibold leading-relaxed text-amber-900">
+      <div className="mb-4 rounded-xl bg-white/70 px-4 py-3.5 backdrop-blur-sm" style={{ border: "1px solid rgba(217,119,6,0.10)" }}>
+        <p className="section-label mb-1.5 text-amber-500">Affirmation</p>
+        <p className="text-sm font-semibold leading-relaxed text-amber-900">
           {affirmation || "Loading…"}
         </p>
       </div>
 
       <button
         onClick={handleCopy}
-        className="flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1.5 text-xs font-semibold text-amber-700 transition hover:bg-amber-200"
+        className="rounded-full bg-amber-100 px-3 py-1.5 text-xs font-semibold text-amber-700 transition hover:bg-amber-200"
       >
-        {copied ? "✓ Copied!" : "📋 Copy affirmation"}
+        {copied ? "Copied!" : "Copy affirmation"}
       </button>
     </div>
   );
